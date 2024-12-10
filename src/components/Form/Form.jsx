@@ -1,13 +1,15 @@
 import './Form.css'
 import { useEffect, useState } from 'react'
+import { useTelegram } from '../../hooks/useTelegram'
 
 
-const tg = window.Telegram.WebApp
+
 const Form = () => {
 	
 	const [country, setCountry] = useState('')
 	const [street, setStreet] = useState('')
 	const [subject, setSubject] = useState('physical')
+	const {tg} = useTelegram();
 	
 
 	
@@ -23,7 +25,7 @@ const Form = () => {
 		} else {
 			tg.MainButton.show()
 		}
-	}, [country, street])
+	}, [country, street]) // eslint-disable-line react-hooks/exhaustive-deps
 	const onChangeCountry = (e) => {
 		setCountry(e.target.value)
 	}
