@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
+
 import { useMemo } from 'react'
 
-// const tg = window.Telegram.WebApp;
 
 export function useTelegram() {
 const tg = useMemo(() => window.Telegram.WebApp, []);
