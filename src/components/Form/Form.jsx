@@ -2,7 +2,7 @@ import './Form.css'
 import { useEffect, useState } from 'react'
 
 
-const tg = window.Telegram.WebApp;
+const tg = window.Telegram.WebApp
 const Form = () => {
 	
 	const [country, setCountry] = useState('')
@@ -12,12 +12,10 @@ const Form = () => {
 
 	
 	useEffect(() => {
-		return () => {
-			tg.MainButton.setParams({
-				text: 'Отправить данные'
-			})
-		}
-	}, [])
+        tg.MainButton.setParams({
+            text: 'Отправить данные'
+        })
+    }, [])
 	
 	useEffect(() => {
 		if(!street || !country) {
