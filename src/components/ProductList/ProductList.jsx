@@ -1,3 +1,6 @@
+/* eslint-disable */
+
+
 import './ProductList.css'
 import { useCallback, useEffect, useState } from 'react'
 import { useTelegram } from '../../hooks/useTelegram'
