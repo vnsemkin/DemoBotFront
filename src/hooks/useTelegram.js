@@ -23,5 +23,6 @@ const tg = useMemo(() => window.Telegram.WebApp, []);
         onToggleButton,
         tg,
         user: tg.initDataUnsafe?.user,
+        queryId: tg.initDataUnsafe?.query_id,
     }
 }
