@@ -28,6 +28,10 @@ const ProductList = () => {
 	const {tg, queryId} = useTelegram()
 	
 	const onSendData = useCallback(() => {
+		if (!queryId) {
+			console.error('Error: queryId is missing')
+			return
+		}
 		const data = {
 			products: addedItems,
 			totalPrice: getTotalPrice(addedItems),
@@ -64,7 +68,7 @@ const ProductList = () => {
 		
 		setAddedItems(newItems)
 		
-		if (newItems === 0){
+		if (newItems.length === 0){
 			tg.MainButton.hide()
 		} else {
 			tg.MainButton.show()
