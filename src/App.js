@@ -11,14 +11,15 @@ function App() {
 
     useEffect(() => {
         tg.ready();
+        tg.expand()
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="App">
             <Header />
             <Routes>
-                <Route path="/" element={<ProductList />} />
-                <Route path="/form" element={<Form />} />
+                <Route path="/telegram-web-app-react/" element={<ProductList />} />
+                <Route path="/telegram-web-app-react/form" element={<Form />} />
             </Routes>
         </div>
     );
