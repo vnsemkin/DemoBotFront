@@ -37,6 +37,10 @@ const ProductList = () => {
 			totalPrice: getTotalPrice(addedItems),
 			queryId,
 		}
+
+		alert(`Отправка данных:\n${JSON.stringify(data, null, 2)}`);
+
+
 		fetch('http://95.179.251.170:8000/web-data', {
 			method: 'POST',
 			headers: {
@@ -44,8 +48,11 @@ const ProductList = () => {
 			},
 			body: JSON.stringify(data)
 		})
-		
-	}, [addedItems])
+
+			.then(response => response.json())
+			.then(result => alert(`Ответ сервера:\n${JSON.stringify(result, null, 2)}`))
+			.catch(error => alert(`Ошибка запроса: ${error.message}`));
+	}, [addedItems, queryId]);
 	
 	useEffect(() => {
 		tg.onEvent('mainButtonClicked', onSendData)
