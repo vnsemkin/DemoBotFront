@@ -41,7 +41,7 @@ const ProductList = () => {
 		alert(`Отправка данных:\n${JSON.stringify(data, null, 2)}`);
 
 
-		fetch('http://95.179.251.170:8000/web-data', {
+		fetch('http://95.179.251.170:8020/web-data', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
