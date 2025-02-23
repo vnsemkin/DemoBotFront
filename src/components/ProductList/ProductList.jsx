@@ -5,6 +5,7 @@ import './ProductList.css'
 import { useCallback, useEffect, useState } from 'react'
 import { useTelegram } from '../../hooks/useTelegram'
 import ProductItem from '../ProductItem/ProductItem'
+import useCheckMixedContent from "../../hooks/useCheckMixedContent";
 
 
 const products = [
@@ -24,6 +25,7 @@ const getTotalPrice = (items = []) => {
 	}, 0)
 }
 const ProductList = () => {
+	useCheckMixedContent();
 	const [addedItems, setAddedItems] = useState([])
 	const {tg, queryId} = useTelegram()
 	
