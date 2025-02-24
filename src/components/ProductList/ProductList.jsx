@@ -29,10 +29,10 @@ const ProductList = () => {
 
 	const onSendData = useCallback(() => {
 		alert('кнопка нажата')
-		if (!queryId) {
-			console.error('Error: queryId is missing')
-			return
-		}
+		// if (!queryId) {
+		// 	console.error('Error: queryId is missing')
+		// 	return
+		// }
 
 		const data = {
 			products: addedItems,
