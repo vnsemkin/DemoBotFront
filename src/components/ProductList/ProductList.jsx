@@ -51,14 +51,14 @@ const ProductList = () => {
 			.catch(error => {
 				console.error('[ERROR] Ошибка запроса:', error.message)
 			})
-	}, [addedItems, queryId])
+	}, [addedItems])
 
 	useEffect(() => {
 		tg.onEvent('mainButtonClicked', onSendData)
 		return () => {
 			tg.offEvent('mainButtonClicked', onSendData)
 		}
-	}, [onSendData, tg])
+	}, [onSendData])
 
 	const onAdd = (product) => {
 		const alreadyAdded = addedItems.find(item => item.id === product.id)
