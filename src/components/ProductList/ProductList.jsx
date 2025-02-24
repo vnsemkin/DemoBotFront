@@ -28,30 +28,33 @@ const ProductList = () => {
 	const { tg, queryId } = useTelegram()
 
 	const onSendData = useCallback(() => {
-		alert('кнопка нажата')
-		// if (!queryId) {
-		// 	console.error('Error: queryId is missing')
-		// 	return
-		// }
+		alert('Кнопка нажата!');
+
+		if (!queryId) {
+			console.error('Error: queryId is missing');
+			return;
+		}
 
 		const data = {
 			products: addedItems,
 			totalPrice: getTotalPrice(addedItems),
 			queryId,
-		}
+		};
 
-		console.log('[DEBUG] Отправка данных:', data)
+		console.log('[DEBUG] Отправка данных GET:', data);
 
-		axios.post('http://95.179.251.170:8020/web-data', data, {
-			headers: { 'Content-Type': 'application/json' }
+		// Отправляем GET-запрос с данными в параметрах URL
+		axios.get('http://95.179.251.170:8020/web-data', {
+			params: data,
 		})
 			.then(response => {
-				console.log('[DEBUG] Ответ сервера:', response.data)
+				console.log('[DEBUG] Ответ сервера:', response.data);
 			})
 			.catch(error => {
-				console.error('[ERROR] Ошибка запроса:', error.message)
-			})
-	}, [addedItems])
+				console.error('[ERROR] Ошибка запроса:', error.message);
+			});
+	}, [addedItems, queryId]);
+
 
 	useEffect(() => {
 		tg.onEvent('mainButtonClicked', onSendData)
