@@ -32,8 +32,8 @@ const ProductList = () => {
 			queryId,
 		}
 
-		alert(`Отправляем данные:\n\n${JSON.stringify(data, null, 2)}`);
-		alert('[DEBUG] onSendData вызван с данными:', data)
+		alert(`[DEBUG] onSendData вызван с данными:\n\n${JSON.stringify(data, null, 2)}`);
+
 		fetch('http://95.179.251.170:8020/web-data', {
 			method: 'POST',
 			headers: {
@@ -41,6 +41,10 @@ const ProductList = () => {
 			},
 			body: JSON.stringify(data)
 		})
+			.then(response => response.json())
+			.then(result => console.log('[DEBUG] Ответ сервера:', result))
+			.catch(error => console.error('[ERROR] Ошибка при отправке запроса:', error));
+
 	}, [addedItems])
 
 	useEffect(() => {
