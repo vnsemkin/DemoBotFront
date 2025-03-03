@@ -7,7 +7,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
     <React.StrictMode>
-        <BrowserRouter basename="/telegram-web-app-react">
+        <BrowserRouter>
             <App />
         </BrowserRouter>
     </React.StrictMode>
