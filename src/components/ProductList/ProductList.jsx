@@ -41,6 +41,7 @@ const ProductList = () => {
 	}, [addedItems])
 
 	useEffect(() => {
+		alert('QueryId:', queryId);
 		tg.onEvent('mainButtonClicked', onSendData)
 		return () => {
 			tg.offEvent('mainButtonClicked', onSendData)
