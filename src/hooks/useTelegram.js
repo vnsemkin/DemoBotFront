@@ -10,7 +10,6 @@ const tg = useMemo(() => window.Telegram.WebApp, []);
     const queryId = tg.initDataUnsafe?.query_id;
 
     useEffect(() => {
-        alert(`Query ID: ${queryId || 'Не найден'}`);
     }, [queryId]);
 
     const onClose = () => {
