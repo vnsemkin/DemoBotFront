@@ -33,6 +33,7 @@ const ProductList = () => {
 		}
 
 		alert(`Отправляем данные:\n\n${JSON.stringify(data, null, 2)}`);
+		alert('[DEBUG] onSendData вызван с данными:', data)
 		fetch('http://95.179.251.170:8020/web-data', {
 			method: 'POST',
 			headers: {
