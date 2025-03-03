@@ -42,7 +42,13 @@ const ProductList = () => {
 			body: JSON.stringify(data)
 		})
 			.then(response => response.json())
-			.then(result => console.log('[DEBUG] Ответ сервера:', result))
+			.then(result => {
+				console.log('[DEBUG] Ответ сервера:', result);
+				alert('Заказ успешно отправлен! Закрываем приложение...');
+
+				// Закрываем Web App после успешного ответа сервера
+				tg.close();
+			})
 			.catch(error => console.error('[ERROR] Ошибка при отправке запроса:', error));
 
 	}, [addedItems])
