@@ -44,9 +44,7 @@ const ProductList = () => {
 		console.log('[DEBUG] Отправка данных GET:', data);
 
 		// Отправляем GET-запрос с данными в параметрах URL
-		axios.post('https://13d4-95-179-251-170.ngrok-free.app/web-data', {
-			params: data,
-		})
+		axios.post('https://13d4-95-179-251-170.ngrok-free.app/web-data', data)
 
 			.then(response => {
 				console.log('[DEBUG] Ответ сервера:', response.data);
