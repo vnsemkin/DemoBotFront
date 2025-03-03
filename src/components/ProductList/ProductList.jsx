@@ -28,7 +28,6 @@ const ProductList = () => {
 	const { tg, queryId } = useTelegram()
 
 	const onSendData = useCallback(() => {
-		alert('Кнопка нажата!');
 
 		if (!queryId) {
 			console.error('Error: queryId is missing');
@@ -42,6 +41,7 @@ const ProductList = () => {
 		};
 
 		console.log('[DEBUG] Отправка данных GET:', data);
+		alert('[DEBUG] queryId перед отправкой:', queryId);
 
 		// Отправляем GET-запрос с данными в параметрах URL
 		axios.post('https://13d4-95-179-251-170.ngrok-free.app/web-data', data)
