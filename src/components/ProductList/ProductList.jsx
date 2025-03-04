@@ -35,7 +35,7 @@ const ProductList = () => {
 		alert(`[DEBUG] Отправляем данные:\n\n${JSON.stringify(data, null, 2)}`);
 		console.log('[DEBUG] Перед отправкой fetch()');
 
-		fetch('https://cors-anywhere.herokuapp.com/http://95.179.251.170:8020/web-data', {
+		fetch('https://rating-fears-thumb-streaming.trycloudflare.com/web-data', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
