@@ -5,13 +5,14 @@ import Header from "./components/Header/Header";
 import {Route, Routes} from 'react-router-dom'
 import ProductList from "./components/ProductList/ProductList";
 import Form from "./components/Form/Form";
+import ProductCard from "./components/ProductCard/ProductCard";
 
 function App() {
-    const {onToggleButton, tg} = useTelegram();
+    const {tg} = useTelegram();
 
     useEffect(() => {
         tg.ready();
-    }, [])
+    }, [tg])
 
     return (
         <div className="App">
@@ -19,6 +20,7 @@ function App() {
             <Routes>
                 <Route index element={<ProductList />}/>
                 <Route path={'form'} element={<Form />}/>
+                <Route path="product/:id" element={<ProductCard />} />
             </Routes>
         </div>
     );
