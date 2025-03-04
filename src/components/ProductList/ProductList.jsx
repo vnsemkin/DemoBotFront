@@ -35,7 +35,7 @@ const ProductList = () => {
 		alert(`[DEBUG] Отправляем данные:\n\n${JSON.stringify(data, null, 2)}`);
 		console.log('[DEBUG] Перед отправкой fetch()');
 
-		fetch('https://rating-fears-thumb-streaming.trycloudflare.com/web-data', {
+		fetch('https://courtesy-caused-navigator-bedroom.trycloudflare.com/web-data', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
