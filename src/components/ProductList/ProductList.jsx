@@ -30,9 +30,10 @@ const ProductList = () => {
 			products: addedItems,
 			totalPrice: getTotalPrice(addedItems),
 			queryId,
-		}
+		};
 
-		alert(`[DEBUG] onSendData вызван с данными:\n\n${JSON.stringify(data, null, 2)}`);
+		alert(`[DEBUG] Отправляем данные:\n\n${JSON.stringify(data, null, 2)}`);
+		console.log('[DEBUG] Перед отправкой fetch()');
 
 		fetch('http://95.179.251.170:8020/web-data', {
 			method: 'POST',
@@ -44,14 +45,17 @@ const ProductList = () => {
 			.then(response => response.json())
 			.then(result => {
 				console.log('[DEBUG] Ответ сервера:', result);
-				alert('Заказ успешно отправлен! Закрываем приложение...');
-
-				// Закрываем Web App после успешного ответа сервера
+				alert('Заказ успешно отправлен!');
 				tg.close();
 			})
-			.catch(error => console.error('[ERROR] Ошибка при отправке запроса:', error));
+			.catch(error => {
+				console.error('[ERROR] Ошибка при отправке запроса:', error);
+				alert('Ошибка при отправке данных, попробуйте снова.');
+			});
 
-	}, [addedItems])
+		console.log('[DEBUG] После вызова fetch()');
+	}, [addedItems, queryId]);
+
 
 	useEffect(() => {
 		tg.onEvent('mainButtonClicked', onSendData)
