@@ -39,20 +39,21 @@ const ProductCard = () => {
                     <button className={styles.favoriteButton} onClick={() => setIsFavorite(!isFavorite)}>
                         {isFavorite ? <FaHeart className={styles.favoriteActive}/> : <FaRegHeart/>}
                     </button>
-                    {selectedColor?.images?.length > 1 && (
-                        <div className={styles.gallery}>
-                            {selectedColor.images.map((img, index) => (
-                                <img
-                                    key={index}
-                                    src={img}
-                                    alt="Доп. фото"
-                                    className={`${styles.galleryImage} ${selectedColor.images[0] === img ? styles.active : ""}`}
-                                    onClick={() => setSelectedColor({...selectedColor, images: [img]})}
-                                />
-                            ))}
-                        </div>
-                    )}
+
                 </div>
+                {selectedColor?.images?.length > 1 && (
+                    <div className={styles.gallery}>
+                        {selectedColor.images.map((img, index) => (
+                            <img
+                                key={index}
+                                src={img}
+                                alt="Доп. фото"
+                                className={`${styles.galleryImage} ${selectedColor.images[0] === img ? styles.active : ""}`}
+                                onClick={() => setSelectedColor({...selectedColor, images: [img]})}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 <div className={styles.details}>
                     <div className={styles.header}>
