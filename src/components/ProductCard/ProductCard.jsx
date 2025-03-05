@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./ProductCard.module.css";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaHeart } from "react-icons/fa";
 import products from "../../data/products";
 
 const ProductCard = () => {
@@ -9,8 +9,9 @@ const ProductCard = () => {
     const navigate = useNavigate();
     const product = products.find(item => item.id === id);
 
-    const [selectedColor, setSelectedColor] = useState(product.colors[0] || null);
-    const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+    const [selectedColor, setSelectedColor] = useState(product?.colors[0] || null);
+    const [selectedSize, setSelectedSize] = useState(product?.sizes[0]);
+    const [quantity, setQuantity] = useState(1);
 
     if (!product) return <h2>Товар не найден</h2>;
 
@@ -27,7 +28,6 @@ const ProductCard = () => {
                         alt={product.title}
                         className={styles.mainImage}
                     />
-
                     {selectedColor?.images?.length > 1 && (
                         <div className={styles.gallery}>
                             {selectedColor.images.map((img, index) => (
@@ -44,7 +44,10 @@ const ProductCard = () => {
                 </div>
 
                 <div className={styles.details}>
-                    <h2 className={styles.title}>{product.title}</h2>
+                    <div className={styles.header}>
+                        <h2 className={styles.title}>{product.title}</h2>
+                        <button className={styles.favorite}><FaHeart /></button>
+                    </div>
                     <span className={styles.price}>{product.price}₽</span>
 
                     <div className={styles.colorPicker}>
@@ -74,6 +77,12 @@ const ProductCard = () => {
                                 </button>
                             ))}
                         </div>
+                    </div>
+
+                    <div className={styles.quantitySelector}>
+                        <button onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
+                        <span>{quantity}</span>
+                        <button onClick={() => setQuantity(q => q + 1)}>+</button>
                     </div>
 
                     <button className={styles.addToCart}>Add to Cart</button>
