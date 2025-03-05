@@ -22,7 +22,7 @@
 
 .user-text {
 	font-size: 14px;
-	color: #333;
+	color: black;
 }
 
 .greeting {
@@ -34,18 +34,26 @@
 	font-weight: bold;
 }
 
+.icons-container {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+.favorite-icon,
 .cart-icon {
 	position: relative;
 	cursor: pointer;
 }
 
+.favorite-count,
 .cart-count {
 	position: absolute;
-	top: -5px;
-	right: -5px;
+	top: -10px;
+	right: -10px;
 	background-color: red;
 	color: white;
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: bold;
 	border-radius: 50%;
 	width: 18px;

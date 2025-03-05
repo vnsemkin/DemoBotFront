@@ -1,9 +1,13 @@
 import { useTelegram } from '../../hooks/useTelegram';
 import { FiShoppingCart } from 'react-icons/fi'; // Импорт иконки корзины
 import './Header.css';
+import {FaHeart} from "react-icons/fa";
+import {useState} from "react";
 
 const Header = () => {
-	const { onClose, user } = useTelegram();
+	const { user } = useTelegram();
+	const [cartCount, setCartCount] = useState(0);
+	const [favoritesCount, setFavoritesCount] = useState(0);
 
 	return (
 		<div className="header">
@@ -16,10 +20,15 @@ const Header = () => {
 					<span className="username">{user?.first_name || 'Guest'}</span>
 				</div>
 			</div>
-
-			<div className="cart-icon">
-				<FiShoppingCart size={24} />
-				<span className="cart-count">2</span> {/* Количество товаров в корзине */}
+			<div className="icons-container">
+				<div className="favorite-icon">
+					<FaHeart size={22} color="black" />
+					<span className="favorite-count">{favoritesCount}</span>
+				</div>
+				<div className="cart-icon">
+					<FiShoppingCart size={24} />
+					<span className="cart-count">{cartCount}</span>
+				</div>
 			</div>
 		</div>
 	);
