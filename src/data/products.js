@@ -15,7 +15,7 @@ const products = [
         price: 2500,
         description: 'Комфортная футболка из 100% хлопка',
         colors: [
-            { name: 'Белый', image: tshirtWhite },
+            { name: 'Белый', hex: '#ffffff', image: tshirtWhite },
         ],
         sizes: ['S', 'M', 'L', 'XL']
     },
@@ -26,7 +26,7 @@ const products = [
         price: 2500,
         description: 'Комфортная футболка из 100% хлопка',
         colors: [
-            { name: 'Белый', image: tshirtPrint },
+            { name: 'Белый', hex: '#fbf4f4', image: tshirtPrint },
         ],
         sizes: ['S', 'M', 'L', 'XL']
     },
@@ -39,6 +39,7 @@ const products = [
         colors: [
             {
                 name: 'Синий',
+                hex: '#222c8f',
                 images: [
                     jeans_1,
                     jeans_2,
@@ -55,7 +56,7 @@ const products = [
         price: 4000,
         description: 'Рубашка приталенного кроя',
         colors: [
-            { name: 'Голубой', image: shirt },
+            { name: 'Голубой', hex: '#256597', image: shirt },
 
         ],
         sizes: ['S', 'M', 'L', 'XL']
@@ -67,8 +68,8 @@ const products = [
         price: 6000,
         description: 'Тёплая и уютная толстовка',
         colors: [
-            { name: 'Красный', image: hoodie_red },
-            { name: 'Черный', image: hoodie_black },
+            { name: 'Красный', hex: '#5e2424', image: hoodie_red },
+            { name: 'Черный', hex: '#000000', image: hoodie_black },
         ],
         sizes: ['S', 'M', 'L', 'XL', 'XXL']
     }
