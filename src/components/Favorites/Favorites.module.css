@@ -1,0 +1,62 @@
+.favoritesContainer {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.closeButton:hover {
+    color: black;
+}
+
+.favoritesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.favoriteItem {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.productImage {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.removeButton {
+    margin-top: 10px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.removeButton:hover {
+    background: darkred;
+}

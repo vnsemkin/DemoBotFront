@@ -1,13 +1,12 @@
 import { useTelegram } from '../../hooks/useTelegram';
-import { FiShoppingCart } from 'react-icons/fi'; // Импорт иконки корзины
+import { FiShoppingCart } from 'react-icons/fi';
+import { FaHeart } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom'; // Для перехода в избранное
 import './Header.css';
-import {FaHeart} from "react-icons/fa";
-import {useState} from "react";
 
-const Header = () => {
+const Header = ({ favoritesCount }) => {
 	const { user } = useTelegram();
-	const [cartCount, setCartCount] = useState(0);
-	const [favoritesCount, setFavoritesCount] = useState(0);
+	const navigate = useNavigate();
 
 	return (
 		<div className="header">
@@ -21,13 +20,13 @@ const Header = () => {
 				</div>
 			</div>
 			<div className="icons-container">
-				<div className="favorite-icon">
+				<div className="favorite-icon" onClick={() => navigate('/favorites')}>
 					<FaHeart size={22} color="black" />
 					<span className="favorite-count">{favoritesCount}</span>
 				</div>
 				<div className="cart-icon">
 					<FiShoppingCart size={24} />
-					<span className="cart-count">{cartCount}</span>
+					<span className="cart-count">0</span>
 				</div>
 			</div>
 		</div>

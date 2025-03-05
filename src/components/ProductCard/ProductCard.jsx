@@ -1,66 +1,70 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import products from "../../data/products";
 import styles from "./ProductCard.module.css";
-import {FaHeart, FaRegHeart, FaTimes} from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaTimes } from "react-icons/fa";
 
-
-const ProductCard = () => {
+const ProductCard = ({ onToggleFavorite, favorites }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const product = products.find(item => item.id === id);
 
-    const defaultColor = product.colors?.[0] || {};
 
-    const [selectedColor, setSelectedColor] = useState(product?.colors[0] || null);
-    const [selectedSize, setSelectedSize] = useState(product?.sizes[0]);
-    const [mainImage, setMainImage] = useState(defaultColor.images?.[0] || defaultColor.image || "");
+
+    const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+    const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+    const [selectedImage, setSelectedImage] = useState(
+        selectedColor.images ? selectedColor.images[0] : selectedColor.image
+    );
     const [quantity, setQuantity] = useState(1);
-    const [isFavorite, setIsFavorite] = useState(false);
+    const isFavorite = favorites.some(item => item.id === product.id);
 
-    if (!product) return <h2>Товар не найден</h2>;
+    useEffect(() => {
+        setSelectedImage(selectedColor.images ? selectedColor.images[0] : selectedColor.image);
+    }, [selectedColor]);
+
+    if (!product) return <h2>Product not found</h2>;
 
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
-                {/*<button className={styles.closeButton} onClick={() => navigate(-1)}>*/}
-                {/*    <FaTimes />*/}
-                {/*</button>*/}
-
+                {/* Основное изображение товара */}
                 <div className={styles.imageContainer}>
-                    <img
-                        src={selectedColor?.images ? selectedColor.images[0] : selectedColor.image}
-                        alt={product.title}
-                        className={styles.mainImage}
-                    />
+                    <img src={selectedImage} alt={product.title} className={styles.mainImage} />
                     <button className={styles.closeButton} onClick={() => navigate(-1)}>
-                        <FaTimes/>
+                        <FaTimes />
                     </button>
-                    <button className={styles.favoriteButton} onClick={() => setIsFavorite(!isFavorite)}>
-                        {isFavorite ? <FaHeart className={styles.favoriteActive}/> : <FaRegHeart/>}
+                    <button
+                        className={styles.favoriteButton}
+                        onClick={() => onToggleFavorite(product)}
+                    >
+                        {isFavorite ? <FaHeart className={styles.favoriteActive} /> : <FaRegHeart />}
                     </button>
-
                 </div>
-                {selectedColor?.images?.length > 1 && (
+
+                {/* Галерея миниатюр */}
+                {selectedColor.images && selectedColor.images.length > 1 && (
                     <div className={styles.gallery}>
                         {selectedColor.images.map((img, index) => (
                             <img
                                 key={index}
                                 src={img}
-                                alt="Доп. фото"
-                                className={`${styles.galleryImage} ${selectedColor.images[0] === img ? styles.active : ""}`}
-                                onClick={() => setSelectedColor({...selectedColor, images: [img]})}
+                                alt="Thumbnail"
+                                className={`${styles.galleryImage} ${selectedImage === img ? styles.active : ""}`}
+                                onClick={() => setSelectedImage(img)}
                             />
                         ))}
                     </div>
                 )}
 
+                {/* Информация о товаре */}
                 <div className={styles.details}>
                     <div className={styles.header}>
                         <h2 className={styles.title}>{product.title}</h2>
-                        <span className={styles.price}>{product.price}₽</span>
+                        <span className={styles.price}>${product.price.toFixed(2)}</span>
                     </div>
 
+                    {/* Выбор цвета */}
                     <div className={styles.colorsSizes}>
                         <div className={styles.colorPicker}>
                             <span>Color:</span>
@@ -69,16 +73,16 @@ const ProductCard = () => {
                                     <div
                                         key={index}
                                         className={`${styles.colorOption} ${selectedColor.name === color.name ? styles.active : ""}`}
-                                        style={{backgroundColor: color.hex}}
+                                        style={{ backgroundColor: color.hex }}
                                         onClick={() => {
                                             setSelectedColor(color);
-                                            setMainImage(color.images?.[0] || color.image || "");
                                         }}
                                     ></div>
                                 ))}
                             </div>
                         </div>
 
+                        {/* Выбор размера */}
                         <div className={styles.sizePicker}>
                             <span>Size:</span>
                             <div className={styles.sizes}>
@@ -95,21 +99,15 @@ const ProductCard = () => {
                         </div>
                     </div>
 
+                    {/* Количество и кнопка добавления в корзину */}
                     <div className={styles.quantityAddtocart}>
                         <div className={styles.quantitySelector}>
-                            <div className={styles.quantityControls}>
-                                <button className={styles.quantityButton}
-                                        onClick={() => setQuantity(q => Math.max(1, q - 1))}>-
-                                </button>
-                                <span className={styles.quantity}>{quantity}</span>
-                                <button className={styles.quantityButton} onClick={() => setQuantity(q => q + 1)}>+
-                                </button>
-                            </div>
+                            <button className={styles.quantityButton} onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
+                            <span className={styles.quantity}>{quantity}</span>
+                            <button className={styles.quantityButton} onClick={() => setQuantity(q => q + 1)}>+</button>
                         </div>
-
                         <button className={styles.addToCart}>Add to Cart</button>
                     </div>
-
                 </div>
             </div>
         </div>

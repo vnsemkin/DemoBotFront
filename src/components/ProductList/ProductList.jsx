@@ -9,7 +9,7 @@ const getTotalPrice = (items = []) => {
 	return items.reduce((acc, item) => acc + item.price, 0);
 };
 
-const ProductList = () => {
+const ProductList = ({ onToggleFavorite, favorites }) => {
 	const [addedItems, setAddedItems] = useState([]);
 	const { tg, queryId } = useTelegram();
 	const [search, setSearch] = useState('');
@@ -106,7 +106,14 @@ const ProductList = () => {
 								product.title.toLowerCase().includes(search.toLowerCase())
 							)
 							.map(product => (
-								<ProductItem key={product.id} product={product} onAdd={onAdd} onClick={() => handleProductClick(product)} />
+								<ProductItem
+									key={product.id}
+									product={product}
+									onAdd={onAdd}
+									onToggleFavorite={onToggleFavorite}
+									isFavorite={favorites.some(item => item.id === product.id)}
+									onClick={() => handleProductClick(product)}
+								/>
 							))}
 					</div>
 				</>
