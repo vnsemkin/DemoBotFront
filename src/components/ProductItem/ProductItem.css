@@ -15,6 +15,11 @@
 	transform: scale(1.02);
 }
 
+.product-link {
+	text-decoration: none; /* Убирает подчеркивание */
+	color: inherit; /* Наследует цвет текста */
+}
+
 .image-container {
 	position: relative;
 	width: 100%;
