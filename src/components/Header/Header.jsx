@@ -4,7 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'; // Для перехода в избранное
 import './Header.css';
 
-const Header = ({ favoritesCount }) => {
+const Header = ({ favoritesCount, cartCount }) => {
 	const { user } = useTelegram();
 	const navigate = useNavigate();
 
@@ -24,9 +24,9 @@ const Header = ({ favoritesCount }) => {
 					<FaHeart size={22} color="black" />
 					<span className="favorite-count">{favoritesCount}</span>
 				</div>
-				<div className="cart-icon">
-					<FiShoppingCart size={24} />
-					<span className="cart-count">0</span>
+				<div className="cart-icon"  onClick={() => navigate('/cart')}>
+					<FiShoppingCart size={24}/>
+					<span className="cart-count">{cartCount}</span>
 				</div>
 			</div>
 		</div>

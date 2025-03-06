@@ -15,10 +15,13 @@ const ProductItem = ({ product, className, onToggleFavorite, favorites=[] }) => 
 		<Link to={`/product/${product.id}`} className={styles.productLink}>
 			<div className={clsx(styles.product, className, styles.customStyle)}>
 				<div className={'img'}>
-					<button className={styles.favoriteButton} onClick={(e) => {
-						e.preventDefault();
-						onToggleFavorite(product);
-					}}>
+					<button
+						className={styles.favoriteButton}
+						onClick={(e) => {
+							e.preventDefault(); // Останавливаем переход по `Link`
+							onToggleFavorite(product);
+						}}
+					>
 						{isFavorite ? <FaHeart className={styles.favoriteActive} /> : <FaRegHeart />}
 					</button>
 					<img src={imageUrl} alt={product.title} className={styles.productImage} />
@@ -33,4 +36,4 @@ const ProductItem = ({ product, className, onToggleFavorite, favorites=[] }) => 
 	);
 };
 
-export default ProductItem;
+export default ProductItem

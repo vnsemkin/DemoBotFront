@@ -111,9 +111,10 @@ const ProductList = ({ onToggleFavorite, favorites }) => {
 									product={product}
 									onAdd={onAdd}
 									onToggleFavorite={onToggleFavorite}
-									isFavorite={favorites.some(item => item.id === product.id)}
+									favorites={favorites} // Передаем актуальные избранные товары
 									onClick={() => handleProductClick(product)}
 								/>
+
 							))}
 					</div>
 				</>

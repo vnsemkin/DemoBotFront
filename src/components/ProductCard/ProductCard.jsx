@@ -4,7 +4,7 @@ import products from "../../data/products";
 import styles from "./ProductCard.module.css";
 import { FaHeart, FaRegHeart, FaTimes } from "react-icons/fa";
 
-const ProductCard = ({ onToggleFavorite, favorites }) => {
+const ProductCard = ({ onToggleFavorite, favorites, addToCart }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const product = products.find(item => item.id === id);
@@ -106,7 +106,9 @@ const ProductCard = ({ onToggleFavorite, favorites }) => {
                             <span className={styles.quantity}>{quantity}</span>
                             <button className={styles.quantityButton} onClick={() => setQuantity(q => q + 1)}>+</button>
                         </div>
-                        <button className={styles.addToCart}>Add to Cart</button>
+                        <button className={styles.addToCart} onClick={() => addToCart(product)}>
+                            Add to Cart
+                        </button>
                     </div>
                 </div>
             </div>
