@@ -4,12 +4,10 @@ import products from "../../data/products";
 import styles from "./ProductCard.module.css";
 import { FaHeart, FaRegHeart, FaTimes } from "react-icons/fa";
 
-const ProductCard = ({ onToggleFavorite, favorites, addToCart }) => {
+const ProductCard = ({ onToggleFavorite, favorites, addToCart, cart }) => {
     const { id } = useParams();
     const navigate = useNavigate();
     const product = products.find(item => item.id === id);
-
-
 
     const [selectedColor, setSelectedColor] = useState(product.colors[0]);
     const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
@@ -17,11 +15,24 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart }) => {
         selectedColor.images ? selectedColor.images[0] : selectedColor.image
     );
     const [quantity, setQuantity] = useState(1);
+    const [showPopup, setShowPopup] = useState(false);
+    const isInCart = (cart || []).some(item => item.id === product?.id);
     const isFavorite = favorites.some(item => item.id === product.id);
 
     useEffect(() => {
         setSelectedImage(selectedColor.images ? selectedColor.images[0] : selectedColor.image);
     }, [selectedColor]);
+
+
+    const handleAddToCart = () => {
+        if (!(cart || []).some(item => item.id === product?.id)) {
+            addToCart({ ...product, quantity });
+            setShowPopup(true);
+            setTimeout(() => setShowPopup(false), 2000);
+        }
+    };
+
+
 
     if (!product) return <h2>Product not found</h2>;
 
@@ -73,7 +84,7 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart }) => {
                                     <div
                                         key={index}
                                         className={`${styles.colorOption} ${selectedColor.name === color.name ? styles.active : ""}`}
-                                        style={{ backgroundColor: color.hex }}
+                                        style={{backgroundColor: color.hex}}
                                         onClick={() => {
                                             setSelectedColor(color);
                                         }}
@@ -102,16 +113,28 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart }) => {
                     {/* Количество и кнопка добавления в корзину */}
                     <div className={styles.quantityAddtocart}>
                         <div className={styles.quantitySelector}>
-                            <button className={styles.quantityButton} onClick={() => setQuantity(q => Math.max(1, q - 1))}>-</button>
+                            <button className={styles.quantityButton}
+                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}>-
+                            </button>
                             <span className={styles.quantity}>{quantity}</span>
                             <button className={styles.quantityButton} onClick={() => setQuantity(q => q + 1)}>+</button>
                         </div>
-                        <button className={styles.addToCart} onClick={() => addToCart(product)}>
-                            Add to Cart
+                        <button
+                            className={`${styles.addToCart} ${isInCart ? styles.addedToCart : ""}`}
+                            onClick={handleAddToCart}
+                            disabled={isInCart}
+                        >
+                            {isInCart ? "Added to Cart" : "Add to Cart"}
                         </button>
                     </div>
                 </div>
             </div>
+
+            {showPopup && (
+                <div className={styles.popup}>
+                    <p>Product successfully added to cart</p>
+                </div>
+            )}
         </div>
     );
 };

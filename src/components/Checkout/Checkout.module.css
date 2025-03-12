@@ -1,0 +1,103 @@
+.checkoutContainer {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Заголовок и кнопка "назад" */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+.backButton {
+    position: absolute;
+    left: 0;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: black;
+    padding: 0 10px;
+}
+
+.checkoutTitle {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1;
+    margin: 0;
+}
+
+/* Список товаров */
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.orderItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.orderItemImage {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.orderDetails {
+    text-align: left;
+}
+
+.orderDetails h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Блок с итоговыми данными */
+.cartSummary {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.cartSummaryItem {
+    display: flex;
+    justify-content: space-between; /* Название слева, сумма справа */
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #ddd; /* Добавляем пунктирную линию */
+}
+
+.cartSummaryItem p {
+    font-weight: normal;
+}
+
+/* Стиль для применённой скидки */
+.discountApplied {
+    color: green;
+}
+
+/* Итоговая сумма */
+.bagTotal {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+}

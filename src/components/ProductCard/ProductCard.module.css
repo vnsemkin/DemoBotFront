@@ -180,6 +180,7 @@
     margin-right: 10px;
 }
 
+/* Стили для кнопки "Add to Cart" */
 .addToCart {
     width: 50%;
     background: black;
@@ -188,4 +189,80 @@
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
+    transition: all 0.3s ease;
 }
+
+/* Стили для кнопки "Added to Cart" */
+.addToCart:disabled {
+    background: #ccc;
+    cursor: default;
+}
+
+.addedToCart {
+    background: #ddd !important;
+    color: black !important;
+    cursor: default;
+}
+
+.popup {
+    width: 70%;
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in-out, fadeOut 0.5s ease-out 1.5s;
+    z-index: 1000;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+
+/* Кнопка "Добавлено в корзину" */
+.addToCart {
+    width: 50%;
+    background: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.addToCart:disabled {
+    background: #ccc;
+    cursor: default;
+}
+
+.addedToCart {
+    background: #ddd !important;
+    color: black !important;
+    cursor: default;
+}
+
