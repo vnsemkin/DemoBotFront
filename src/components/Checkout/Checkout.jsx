@@ -42,7 +42,7 @@ ${orderDetails}
 `;
 
         // Отправляем сообщение в Telegram чат
-        await fetch("http://localhost:8020/send-message", {
+        await fetch("http://172.17.0.4:8020/send-message", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
