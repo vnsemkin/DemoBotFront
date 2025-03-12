@@ -16,48 +16,58 @@ const Checkout = ({ cart, promoCode, discount }) => {
     const subtotalAfterDiscount = subtotal - discountAmount;
 
     // Стоимость доставки (фиксированная)
-    const shippingCost = 4.00;
+    const shippingCost = 5.00;
 
     // Итоговая сумма (с учётом скидки и доставки)
     const finalTotal = subtotalAfterDiscount + shippingCost;
 
-    // Оборачиваем в useCallback, чтобы функция не пересоздавалась при каждом рендере
-    const handlePayment = useCallback(async () => {
+    // Отправка данных в Telegram и закрытие WebApp
+    const handleFakePayment = useCallback(async () => {
         tg.MainButton.text = "Processing...";
         tg.MainButton.show();
 
-        const response = await fetch("http://localhost:8020/web-data", {
+        // Формируем сообщение о заказе
+        const orderDetails = cart
+            .map((item) => `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
+            .join("\n");
+
+        const message = `
+🛒 *Новый заказ!*  
+📦 Товары:  
+${orderDetails}  
+
+💰 *Итоговая сумма:* $${finalTotal.toFixed(2)}  
+🚚 Доставка: $${shippingCost.toFixed(2)}  
+🎟️ Промокод: ${promoCode ? promoCode : "Не использован"}
+`;
+
+        // Отправляем сообщение в Telegram чат
+        await fetch("http://localhost:8020/send-message", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                queryId: tg.initDataUnsafe?.query_id,
-                products: cart,
-                promoCode: promoCode
+                chatId: tg.initDataUnsafe?.user?.id,
+                text: message
             })
         });
 
-        const data = await response.json();
-        if (data.status === "ok") {
-            tg.MainButton.text = "Paid!";
-            navigate("/success");
-        } else {
-            tg.MainButton.text = "Payment Failed";
-        }
-
-        setTimeout(() => tg.MainButton.hide(), 3000);
-    }, [tg, cart, promoCode, navigate]);
+        // Закрываем WebApp
+        setTimeout(() => {
+            tg.close();
+        }, 1000);
+    }, [tg, cart, promoCode, finalTotal, shippingCost]);
 
     // Показываем MainButton при входе и назначаем обработчик
     useEffect(() => {
         tg.MainButton.setText(`Pay $${finalTotal.toFixed(2)}`);
         tg.MainButton.show();
-        tg.MainButton.onClick(handlePayment);
+        tg.MainButton.onClick(handleFakePayment);
 
         return () => {
             tg.MainButton.hide();
-            tg.MainButton.offClick(handlePayment);
+            tg.MainButton.offClick(handleFakePayment);
         };
-    }, [tg, finalTotal, handlePayment]);
+    }, [tg, finalTotal, handleFakePayment]);
 
     return (
         <div className={styles.checkoutContainer}>
