@@ -26,12 +26,22 @@ const Checkout = ({ cart, promoCode, discount }) => {
         tg.MainButton.text = "Processing...";
         tg.MainButton.show();
 
-        // Формируем сообщение о заказе
+        // Получаем query_id
+        const queryId = tg.initDataUnsafe?.query_id;
+        if (!queryId) {
+            alert("Ошибка: query_id отсутствует!");
+            return;
+        }
+
+        // Формируем данные заказа
         const orderDetails = cart
             .map((item) => `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
             .join("\n");
 
-        const message = `
+        const requestData = {
+            query_id: queryId,  // Добавляем query_id
+            chatId: tg.initDataUnsafe?.user?.id,
+            text: `
 🛒 *Новый заказ!*  
 📦 Товары:  
 ${orderDetails}  
@@ -39,16 +49,17 @@ ${orderDetails}
 💰 *Итоговая сумма:* $${finalTotal.toFixed(2)}  
 🚚 Доставка: $${shippingCost.toFixed(2)}  
 🎟️ Промокод: ${promoCode ? promoCode : "Не использован"}
-`;
+`
+        };
 
-        // Отправляем сообщение в Telegram чат
-        await fetch("http://172.17.0.4:8020/send-message", {
+        // Показываем alert перед отправкой данных
+        alert("Отправляем на сервер:\n" + JSON.stringify(requestData, null, 2));
+
+        // Отправляем запрос на сервер
+        await fetch("http://95.179.242.147:8020/send-message", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chatId: tg.initDataUnsafe?.user?.id,
-                text: message
-            })
+            body: JSON.stringify(requestData)
         });
 
         // Закрываем WebApp
@@ -56,6 +67,7 @@ ${orderDetails}
             tg.close();
         }, 1000);
     }, [tg, cart, promoCode, finalTotal, shippingCost]);
+
 
     // Показываем MainButton при входе и назначаем обработчик
     useEffect(() => {
