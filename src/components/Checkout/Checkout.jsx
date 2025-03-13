@@ -8,30 +8,28 @@ const Checkout = ({ cart, promoCode, discount }) => {
     const navigate = useNavigate();
     const { tg } = useTelegram();
 
-    // Вычисляем стоимость товаров
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const shippingCost = 5.00;
+    const discountAmount = subtotal * (discount / 100);
+    const subtotalAfterDiscount = subtotal - discountAmount;
+    const finalTotal = subtotalAfterDiscount + shippingCost;
 
-    // Отправка данных в Telegram и закрытие WebApp
+    // Отправка данных в Telegram
     const handleFakePayment = useCallback(async () => {
         tg.MainButton.text = "Processing...";
         tg.MainButton.show();
 
-        // Получаем query_id
+        // query_id
         const queryId = tg.initDataUnsafe?.query_id;
         if (!queryId) {
             alert("Ошибка: query_id отсутствует!");
             return;
         }
 
-        // Формируем данные заказа
+        // Данные заказа
         const orderDetails = cart
             .map((item) => `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
             .join("\n");
-
-        // Рассчитываем финальную сумму с учетом скидки и доставки
-        const discountAmount = subtotal * (discount / 100);
-        const subtotalAfterDiscount = subtotal - discountAmount;
-        const finalTotal = subtotalAfterDiscount + shippingCost; // Теперь правильно!
 
         // Формируем текст заказа с промокодом (если он есть)
         const promoText = promoCode ? `\n🎟️ *Промокод:* ${promoCode}` : "";
@@ -67,8 +65,6 @@ ${promoText}
     }, [tg, cart, promoCode, finalTotal, shippingCost]);
 
 
-
-    // Показываем MainButton при входе и назначаем обработчик
     useEffect(() => {
         tg.MainButton.setText(`Pay $${finalTotal.toFixed(2)}`);
         tg.MainButton.show();
