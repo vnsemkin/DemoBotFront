@@ -31,8 +31,9 @@ const Checkout = ({ cart, promoCode, discount }) => {
             .map((item) => {
                 const itemTotal = item.price * item.quantity; // Исходная цена
                 const discountedPrice = itemTotal * (1 - discount / 100); // Цена со скидкой
-                return promoCode
-                    ? ` ${item.title} (Size: ${item.selectedSize}, Color: ${item.selectedColor.name}) x${item.quantity} - ~$${itemTotal.toFixed(2)}~ → *$${discountedPrice.toFixed(2)}*`
+
+                return discount > 0 // Если есть скидка
+                    ? ` ${item.title} (Size: ${item.selectedSize}, Color: ${item.selectedColor.name}) x${item.quantity} - *$${discountedPrice.toFixed(2)}*`
                     : ` ${item.title} (Size: ${item.selectedSize}, Color: ${item.selectedColor.name}) x${item.quantity} - $${itemTotal.toFixed(2)}`;
             })
             .join("\n");
@@ -94,14 +95,24 @@ ${promoText}
                 {cart.map((item, index) => (
                     <div key={index} className={styles.orderItem}>
                         <img
-                            src={item.colors[0].images ? item.colors[0].images[0] : item.colors[0].image}
+                            src={item.selectedColor.images ? item.selectedColor.images[0] : item.selectedColor.image}
                             alt={item.title}
                             className={styles.orderItemImage}
                         />
                         <div className={styles.orderDetails}>
                             <h3>{item.title}</h3>
                             <p>Quantity: {item.quantity}</p>
-                            <p>Price: ${item.price.toFixed(2)}</p>
+                            <p>
+                                Price:
+                                {discount > 0 ? (
+                                    <span>
+      <s>${(item.price * item.quantity).toFixed(2)}</s> →
+      <b> ${((item.price * item.quantity) * (1 - discount / 100)).toFixed(2)}</b>
+    </span>
+                                ) : (
+                                    <b>${(item.price * item.quantity).toFixed(2)}</b>
+                                )}
+                            </p>
                         </div>
                     </div>
                 ))}

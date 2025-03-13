@@ -41,7 +41,7 @@ const CartPage = ({ cart, removeFromCart, updateQuantity, promoCode, setPromoCod
                         >
                             <img
                                 src={item.selectedColor.images ? item.selectedColor.images[0] : item.selectedColor.image}
-                                alt={item.title} className={styles.cartItemImage}/>
+                                alt={item.title} className={styles.cartItemImage}
                             />
                             <div className={styles.secondContainer}>
                                 <div className={styles.cartItemDetails}>
