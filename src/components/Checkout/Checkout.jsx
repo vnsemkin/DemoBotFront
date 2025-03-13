@@ -56,7 +56,7 @@ ${orderDetails}
         alert("Отправляем на сервер:\n" + JSON.stringify(requestData, null, 2));
 
         // Отправляем запрос на сервер
-        await fetch("https://95.179.242.147:8020/send-message", {
+        await fetch("https://tgshop.duckdns.org:8020/send-message", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData)
