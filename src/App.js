@@ -19,6 +19,7 @@ function App() {
 
     useEffect(() => {
         tg.ready();
+        tg.expand();
     }, [tg]);
 
     const toggleFavorite = (product) => {
