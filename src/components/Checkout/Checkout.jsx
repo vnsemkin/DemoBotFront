@@ -42,13 +42,14 @@ const Checkout = ({ cart, promoCode, discount }) => {
             query_id: queryId,  // Добавляем query_id
             chatId: tg.initDataUnsafe?.user?.id,
             text: `
-🛒 *Новый заказ!*  
+🛒 *Ваш заказ:*  
 📦 Товары:  
 ${orderDetails}  
 
-💰 *Итоговая сумма:* $${finalTotal.toFixed(2)}  
+
 🚚 Доставка: $${shippingCost.toFixed(2)}  
-🎟️ Промокод: ${promoCode ? promoCode : "Не использован"}
+💰 *Итого:* $${finalTotal.toFixed(2)}  
+// 🎟️ Промокод: ${promoCode ? promoCode : "Не использован"}
 `
         };
 
