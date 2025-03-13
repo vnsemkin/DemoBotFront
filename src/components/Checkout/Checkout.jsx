@@ -11,16 +11,6 @@ const Checkout = ({ cart, promoCode, discount }) => {
     // Вычисляем стоимость товаров
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-    // Учитываем скидку
-    const discountAmount = subtotal * (discount / 100);
-    const subtotalAfterDiscount = subtotal - discountAmount;
-
-    // Стоимость доставки (фиксированная)
-    const shippingCost = 5.00;
-
-    // Итоговая сумма (с учётом скидки и доставки)
-    const finalTotal = subtotalAfterDiscount + shippingCost;
-
     // Отправка данных в Telegram и закрытие WebApp
     const handleFakePayment = useCallback(async () => {
         tg.MainButton.text = "Processing...";
@@ -38,19 +28,26 @@ const Checkout = ({ cart, promoCode, discount }) => {
             .map((item) => `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
             .join("\n");
 
+        // Рассчитываем финальную сумму с учетом скидки и доставки
+        const discountAmount = subtotal * (discount / 100);
+        const subtotalAfterDiscount = subtotal - discountAmount;
+        const finalTotal = subtotalAfterDiscount + shippingCost; // Теперь правильно!
+
+        // Формируем текст заказа с промокодом (если он есть)
+        const promoText = promoCode ? `\n🎟️ *Промокод:* ${promoCode}` : "";
+
         const requestData = {
-            query_id: queryId,  // Добавляем query_id
+            query_id: queryId,
             chatId: tg.initDataUnsafe?.user?.id,
             text: `
 🛒 *Ваш заказ:*  
 📦 Товары:  
 ${orderDetails}  
 
-
 🚚 Доставка: $${shippingCost.toFixed(2)}  
 💰 *Итого:* $${finalTotal.toFixed(2)}  
-// 🎟️ Промокод: ${promoCode ? promoCode : "Не использован"}
-`
+${promoText} 
+        `.trim()
         };
 
         // Показываем alert перед отправкой данных
@@ -68,6 +65,7 @@ ${orderDetails}
             tg.close();
         }, 1000);
     }, [tg, cart, promoCode, finalTotal, shippingCost]);
+
 
 
     // Показываем MainButton при входе и назначаем обработчик
