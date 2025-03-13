@@ -28,11 +28,17 @@ const Checkout = ({ cart, promoCode, discount }) => {
 
         // Данные заказа
         const orderDetails = cart
-            .map((item) => `${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
+            .map((item) => {
+                const itemTotal = item.price * item.quantity; // Исходная цена
+                const discountedPrice = itemTotal * (1 - discount / 100); // Цена со скидкой
+                return promoCode
+                    ? ` ${item.title} (Size: ${item.selectedSize}, Color: ${item.selectedColor.name}) x${item.quantity} - ~$${itemTotal.toFixed(2)}~ → *$${discountedPrice.toFixed(2)}*`
+                    : ` ${item.title} (Size: ${item.selectedSize}, Color: ${item.selectedColor.name}) x${item.quantity} - $${itemTotal.toFixed(2)}`;
+            })
             .join("\n");
 
         // Формируем текст заказа с промокодом (если он есть)
-        const promoText = promoCode ? `\n🎟️ *Промокод:* ${promoCode}` : "";
+        const promoText = promoCode ? `🎟️ *Промокод:* ${promoCode} (-${discount}%)` : "";
 
         const requestData = {
             query_id: queryId,
@@ -44,12 +50,9 @@ ${orderDetails}
 
 🚚 Доставка: $${shippingCost.toFixed(2)}  
 💰 *Итого:* $${finalTotal.toFixed(2)}  
-${promoText} 
+${promoText}
         `.trim()
         };
-
-        // Показываем alert перед отправкой данных
-        alert("Отправляем на сервер:\n" + JSON.stringify(requestData, null, 2));
 
         // Отправляем запрос на сервер
         await fetch("https://tgshop.duckdns.org:8020/send-message", {
@@ -62,7 +65,7 @@ ${promoText}
         setTimeout(() => {
             tg.close();
         }, 1000);
-    }, [tg, cart, promoCode, finalTotal, shippingCost]);
+    }, [tg, cart, promoCode, finalTotal, shippingCost, discount]);
 
 
     useEffect(() => {

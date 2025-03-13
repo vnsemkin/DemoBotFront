@@ -26,7 +26,7 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart, cart }) => {
 
     const handleAddToCart = () => {
         if (!(cart || []).some(item => item.id === product?.id)) {
-            addToCart({ ...product, quantity });
+            addToCart({ ...product, quantity, selectedSize, selectedColor });
             setShowPopup(true);
             setTimeout(() => setShowPopup(false), 2000);
         }

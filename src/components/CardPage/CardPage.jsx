@@ -40,9 +40,8 @@ const CartPage = ({ cart, removeFromCart, updateQuantity, promoCode, setPromoCod
                             onClick={() => navigate(`/product/${item.id}`, { state: item })}
                         >
                             <img
-                                src={item.colors[0].images ? item.colors[0].images[0] : item.colors[0].image}
-                                alt={item.title}
-                                className={styles.cartItemImage}
+                                src={item.selectedColor.images ? item.selectedColor.images[0] : item.selectedColor.image}
+                                alt={item.title} className={styles.cartItemImage}/>
                             />
                             <div className={styles.secondContainer}>
                                 <div className={styles.cartItemDetails}>
@@ -61,7 +60,7 @@ const CartPage = ({ cart, removeFromCart, updateQuantity, promoCode, setPromoCod
                                     </div>
                                 </div>
                                 <div className={styles.cartQuantityControlSizeTrash}>
-                                    <p>{item.sizes[0]}</p>
+                                    <p>{item.selectedSize}</p>
                                     <button className={styles.cartRemoveButton} onClick={(e) => {
                                         e.stopPropagation();
                                         removeFromCart(item.id);
