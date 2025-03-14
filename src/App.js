@@ -8,37 +8,31 @@ import ProductCard from "./components/ProductCard/ProductCard";
 import Favorites from "./components/Favorites/Favorites";
 import CartPage from "./components/CardPage/CardPage";
 import Checkout from "./components/Checkout/Checkout";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
+import { useLocalStorage } from "./hooks/useLocaltorage";
 
 function App() {
     const { tg } = useTelegram();
 
-    // Избранные товары
-    const [favorites, setFavorites] = useState([]);
-
-    // Товары в корзине
-    const [cart, setCart] = useState([]);
-
-    // Поля для промокода/скидки
-    const [promoCode, setPromoCode] = useState("");
-    const [discount, setDiscount] = useState(0);
-
-    // Состояние для хранения выбранных опций (цвет, размер) каждого товара
-    const [productOptions, setProductOptions] = useState({});
+    const [favorites, setFavorites] = useLocalStorage('favorites', []);
+    const [cart, setCart] = useLocalStorage('cart', []);
+    const [promoCode, setPromoCode] = useLocalStorage('promoCode', "");
+    const [discount, setDiscount] = useLocalStorage('discount', 0);
+    const [productOptions, setProductOptions] = useLocalStorage('productOptions', {});
 
     useEffect(() => {
         tg.ready();
         tg.expand();
     }, [tg]);
 
-    // Функция обновления выбранных опций (цвет/размер)
-    const updateProductOptions = useCallback((productId, newSize, newColor) => {
+    const updateProductOptions = useCallback((productId, newSize, newColor, newQuantity) => {
+        // Обновляем локальное состояние с опциями товара
         setProductOptions(prevOptions => ({
             ...prevOptions,
             [productId]: { selectedSize: newSize, selectedColor: newColor }
         }));
 
-        // Если товар уже в избранном – обновляем и там
+        // Если товар уже в избранном – обновляем его опции
         setFavorites(prevFavorites =>
             prevFavorites.map(item =>
                 item.id === productId
@@ -46,7 +40,22 @@ function App() {
                     : item
             )
         );
-    }, []);
+
+        // Если товар уже в корзине – обновляем его опции и, если передано, количество
+        setCart(prevCart =>
+            prevCart.map(item =>
+                item.id === productId
+                    ? {
+                        ...item,
+                        selectedSize: newSize,
+                        selectedColor: newColor,
+                        quantity: newQuantity !== undefined ? newQuantity : item.quantity
+                    }
+                    : item
+            )
+        );
+    }, [setProductOptions, setFavorites, setCart]);
+
 
     // Добавить/убрать из избранного
     const toggleFavorite = useCallback((product) => {
@@ -68,7 +77,7 @@ function App() {
                 ];
             }
         });
-    }, [productOptions]);
+    }, [productOptions, setFavorites]);
 
     // Добавление в корзину
     const addToCart = (product) => {
@@ -134,6 +143,7 @@ function App() {
                             cart={cart}
                             productOptions={productOptions}
                             updateProductOptions={updateProductOptions}
+                            updateQuantity={updateQuantity}
                         />
                     }
                 />
