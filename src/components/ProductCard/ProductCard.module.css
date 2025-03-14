@@ -143,6 +143,7 @@
     border: 1px solid #ddd;
     cursor: pointer;
     border-radius: 50%;
+    color: black;
     width: 30px;
     height: 30px;
     font-size: 14px;
@@ -166,6 +167,7 @@
 }
 
 .quantityButton {
+    color: black;
     width: 30px;
     height: 30px;
     border-radius: 50%;

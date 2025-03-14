@@ -66,7 +66,7 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart, cart, productOpti
                         className={styles.favoriteButton}
                         onClick={handleToggleFavorite}
                     >
-                        {isFavorite ? <FaHeart className={styles.favoriteActive} /> : <FaRegHeart />}
+                        {isFavorite ? <FaHeart style={{ stroke: 'black' }} className={styles.favoriteActive} /> : <FaRegHeart />}
                     </button>
                 </div>
 
