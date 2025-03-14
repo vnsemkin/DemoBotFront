@@ -22,6 +22,7 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart, cart, productOpti
 
     // Локальное состояние для количества
     const [quantity, setQuantity] = useState(1);
+    const [showPopup, setShowPopup] = useState(false);
 
     // Проверяем, есть ли товар в корзине
     const isInCart = cart.some(item => item.id === product.id);
@@ -42,6 +43,10 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart, cart, productOpti
                 selectedSize,
                 selectedColor
             });
+            setShowPopup(true);
+            // setTimeout(() => {
+            //     setShowPopup(false);
+            // }, 2000);
         }
     };
 
@@ -131,6 +136,11 @@ const ProductCard = ({ onToggleFavorite, favorites, addToCart, cart, productOpti
                     </div>
                 </div>
             </div>
+            {showPopup && (
+                <div className={styles.popup}>
+                    Product successfully added to cart!
+                </div>
+            )}
         </div>
     );
 };
