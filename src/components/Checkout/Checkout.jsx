@@ -4,7 +4,7 @@ import styles from "./Checkout.module.css";
 import { useTelegram } from "../../hooks/useTelegram";
 import { FaArrowLeft } from "react-icons/fa";
 
-const Checkout = ({ cart, promoCode, discount }) => {
+const Checkout = ({ cart, promoCode, discount, clearCart }) => {
     const navigate = useNavigate();
     const { tg } = useTelegram();
 
@@ -61,6 +61,8 @@ ${promoText}
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData)
         });
+
+        clearCart()
 
         // Закрываем WebApp
         setTimeout(() => {

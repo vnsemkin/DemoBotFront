@@ -114,6 +114,10 @@ function App() {
         ));
     };
 
+    const clearCart = () => {
+        setCart([]);
+    };
+
     return (
         <div className="App">
             <Header
@@ -181,6 +185,7 @@ function App() {
                             cart={cart}
                             promoCode={promoCode}
                             discount={discount}
+                            clearCart={clearCart}
                         />
                     }
                 />
