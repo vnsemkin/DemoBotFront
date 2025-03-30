@@ -5,7 +5,7 @@ import { useTelegram } from "../../hooks/useTelegram";
 import { FaArrowLeft } from "react-icons/fa";
 
 const workURL = 'https://tgshop.duckdns.org:8020/send-message'
-const testURL = 'https://95.179.242.147:8020/send-message'
+
 
 const Checkout = ({ cart, promoCode, discount, clearCart }) => {
     const navigate = useNavigate();
@@ -59,7 +59,7 @@ ${promoText}
         };
 
         // Отправляем запрос на сервер
-        await fetch(testURL, {
+        await fetch(workURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData)
