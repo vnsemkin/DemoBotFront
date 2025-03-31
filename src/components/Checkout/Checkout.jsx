@@ -56,12 +56,14 @@ ${promoText}
         `.trim()
         };
 
+        alert(JSON.stringify(requestData, null, 2))
         // Отправляем запрос на сервер
-        await fetch("https://tgshop.duckdns.org:8020/send-message", {
+        await fetch("https://easygo.duckdns.org/api/v1/send-message", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestData)
         });
+        alert(requestData)
 
         clearCart()
 
